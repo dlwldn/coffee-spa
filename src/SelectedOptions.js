@@ -1,3 +1,6 @@
+import { routeChange } from "./router/router.js";
+import { setItem, getItem } from "./storage/storage.js";
+
 export default function SelectedOptions({ $target, initialState }) {
     const $component = document.createElement('div');
     $target.appendChild($component);
@@ -58,6 +61,20 @@ export default function SelectedOptions({ $target, initialState }) {
             } catch(e) {
                 console.log(e);
             }
+        }
+    })
+
+    $component.addEventListener('click', (e) => {
+        const { selectedOptions } = this.state;
+        if(e.target.className === 'OrderButton') {
+            const cartData = getItem('products_cart', [])
+            setItem('products_cart', cartData.concat(selectedOptions.map(selectedOption => ({
+                productId: selectedOption.productId,
+                optionsId: selectedOption.optionId,
+                quantity: selectedOption.quantity,
+            }))))
+
+            routeChange('/cart');
         }
     })
 

@@ -10,7 +10,7 @@ export default function ProductListPage({ $target }) {
     this.render = () => {
         $target.appendChild($page);
 
-        const productList = new ProductList({
+        new ProductList({
             $target: $page,
             initialState: this.state
         })
